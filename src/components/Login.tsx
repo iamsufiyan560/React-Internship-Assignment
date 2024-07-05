@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField, Button, Grid, Typography, Paper, Alert } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom";
 
@@ -12,6 +12,16 @@ const UserForm: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const setUser = useSetRecoilState(userAtom);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.error) {
+      setError(true);
+      setErrorMessage("You must enter your details before accessing the data page.");
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  
+  }, [location,navigate]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

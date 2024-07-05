@@ -14,7 +14,7 @@ function App() {
           path="/"
           element={user ? <Navigate to="/data" /> : <UserForm />}
         />
-        <Route path="/data" element={!user ? <Navigate to="/" /> : <Table />} />
+        <Route path="/data" element={!user ? <Navigate to="/" state={{ error: true }} /> : <Table />} />
       </Routes>
     </>
   );
